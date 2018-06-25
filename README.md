@@ -130,6 +130,7 @@ var menustructure = [
 ];
 ```
 **NOTE:** The braces after the = and after `"sub":` are square ones!
+
 **NOTE:** Every other property, not mentioned here, is skipped!
 
 ### ContextUtil
