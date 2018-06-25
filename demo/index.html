@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>ContextmenuJS - Demo Page</title>
+
+	<link rel="stylesheet" href="../contextmenu.css" />
+	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
+	<script src="../contextmenu.js"></script>
+
+	<script>
+		var menu;
+
+		var cmen = [
+			{
+				"text": "Item 1",
+				"sub": [
+					{
+						"text": "Item 11"
+					},
+					{
+						"text": "Item 12"
+					},
+					{
+						"type": ContextMenu.DIVIDER
+					},
+					{
+						"text": "Item 13",
+						"enabled": false,
+						"sub": [
+							{
+								"text": "Item 131"
+							}
+						]
+					}
+				]
+			},
+			{
+				"text": "Item 2",
+				"icon": '<i class="fas fa-exclamation-circle"></i>',
+				"events": {
+					"click": function(e){
+						alert(e);
+					}
+				}
+			}
+		];
+
+		window.addEventListener("load", function(){
+			menu = new ContextMenu(cmen);
+
+			document.getElementById('cmenu').addEventListener("contextmenu", function(e){
+				menu.display(e);
+			});
+		});
+	</script>
+
+	<style>
+		*{
+			box-sizing: border-box;
+		}
+
+		html, body{
+			height: 100%;
+		}
+
+		body{
+			padding: 0;
+			margin: 0;
+			font-family: sans-serif;
+		}
+
+		header h1{
+			margin: 1em;
+			display: block;
+			text-align: center;
+			font-size: 3rem;
+			color: #fff;
+		}
+
+		header{
+			padding: 5px;
+			margin-bottom: 1em;
+
+			background-color: #159957;
+			background-image: -webkit-linear-gradient(30deg, #155799, #159957);
+			background-image: -o-linear-gradient(30deg, #155799, #159957);
+			background-image: linear-gradient(120deg, #155799, #159957);
+		}
+
+		main{
+			padding: 5px;
+			display: block;
+			height: calc(100% - 3em - 3em - 3em - 1em - 20px);
+		}
+
+		#cmenu{
+			width: 100%;
+			height: 100%;
+			background-color: #2980b9;
+			padding: 10px;
+			color: #fff;
+		}
+	</style>
+</head>
+
+<body>
+	<header>
+		<h1>ContextMenu Test</h1>
+	</header>
+
+	<main>
+		<div id="cmenu">
+			Right-click this blue box
+		</div>
+	</main>
+</body>
+</html>
