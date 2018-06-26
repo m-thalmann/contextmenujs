@@ -83,6 +83,7 @@ menu.reload();                    // Reloads/Renders the contextmenu inside of a
 menu.display(e, target);          // Displays the contextmenu on the location present in the contextmenu-event (e)
                                   // and executes e.preventDefault();
                                   // if target is set, the contextTarget is set to that
+menu.hide();                      // Hides the menu, if shown
                             
 menu.setOptions(options);         // Resets the options (object)
 menu.changeOption(option, value); // Changes one option (string, object)
@@ -134,7 +135,68 @@ var menustructure = [
 **NOTE:** Every other property, not mentioned here, is skipped!
 
 ### ContextUtil
+A collection of helper methods. Can't be instanciated.
+#### Methods
+```javascript
+ContextUtil.getProperty(opt, o, def);        // Returns the value of 'o' in the array/object opt, if it is set;
+                                             // else it returns def (object, string, object)
+
+ContextUtil.getSizes(obj);                   // Recursively gets the size of a DOM-List (ul), that has absolute positioned
+                                             // children (dom-element)
+```
 
 ### Options
 
+| Option | Values | Definition |
+|:---------------:|:----------:|:---------------------------------------------------------------:|
+| close_on_resize | true/false | Sets if the contextmenu is closed, when the window is resized |
+| close_on_click | true/false | Sets if the contextmenu is closed, when the window is clicked |
+| default_icon | [string] | Sets the default icon for a menu item (is overridden, when set) |
+| default_text | [string] | Sets the default text for a menu item (is overridden, when set) |
+| sub_icon | [string] | Sets the arrow icon for sub menus |
+| mouse_offset | [integer] | Sets the offset to the mouse, when opened (in pixel) |
+
 ## Example
+### Code:
+```javascript
+var menu = new ContextMenu(
+  [
+    {
+      "text": "Item 1",
+      "sub": [
+        {
+          "text": "Item 11"
+        },
+        {
+          "text": "Item 12"
+        },
+        {
+          "type": ContextMenu.DIVIDER
+        },
+        {
+          "text": "Item 13",
+          "enabled": false,
+          "sub": [
+            {
+              "text": "Item 131"
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "text": "Item 2",
+      "icon": '<i class="fas fa-exclamation-circle"></i>',
+      "events": {
+        "click": function(e){
+          alert(e);
+        }
+      }
+    }
+  ]
+);
+```
+
+### Output:
+
+![contextmenuJs example](demo/example.jpg)
