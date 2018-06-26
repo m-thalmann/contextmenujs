@@ -1,4 +1,4 @@
-function ContextMenu(menu){
+function ContextMenu(menu, options){
 	var self = this;
 	var num = ContextMenu.count++;
 
@@ -6,16 +6,46 @@ function ContextMenu(menu){
 	this.contextTarget = null;
 
 	if(!(menu instanceof Array)){
-		throw new Error("Argument 1 must be of type Array");
+		throw new Error("Parameter 1 must be of type Array");
+	}
+
+	if(typeof options !== "undefined"){
+		if(typeof options !== "object"){
+			throw new Error("Parameter 2 must be of type object");
+		}
+	}else{
+		options = {};
 	}
 
 	window.addEventListener("resize", function(){
-		var menu = document.getElementById('cm_' + num);
-
-		if(typeof menu !== "undefined"){
-			menu.classList.remove("display");
+		if(ContextUtil.getProperty(options, "close_on_resize", true)){
+			self.hide();
 		}
 	});
+
+	this.setOptions = function(_options){
+		if(typeof _options === "object"){
+			options = _options;
+		}else{
+			throw new Error("Parameter 1 must be of type object")
+		}
+	}
+
+	this.changeOption = function(option, value){
+		if(typeof option === "string"){
+			if(typeof value !== "undefined"){
+				options[option] = value;
+			}else{
+				throw new Error("Parameter 2 must be set");
+			}
+		}else{
+			throw new Error("Parameter 1 must be of type string");
+		}
+	}
+
+	this.getOptions = function(){
+		return options;
+	}
 
 	this.reload = function(){
 		if(document.getElementById('cm_' + num) == null){
@@ -43,18 +73,30 @@ function ContextMenu(menu){
 				var icon_span = document.createElement("span");
 				icon_span.className = 'cm_icon_span';
 
-				icon_span.innerHTML = ContextUtil.getProperty(item, "icon", "");
+				if(ContextUtil.getProperty(item, "icon", "") != ""){
+					icon_span.innerHTML = ContextUtil.getProperty(item, "icon", "");
+				}else{
+					icon_span.innerHTML = ContextUtil.getProperty(options, "default_icon", "");
+				}
 
 				var text_span = document.createElement("span");
 				text_span.className = 'cm_text';
 
-				text_span.innerHTML = ContextUtil.getProperty(item, "text", "item");
+				if(ContextUtil.getProperty(item, "text", "") != ""){
+					text_span.innerHTML = ContextUtil.getProperty(item, "text", "");
+				}else{
+					text_span.innerHTML = ContextUtil.getProperty(options, "default_text", "item");
+				}
 
 				var sub_span = document.createElement("span");
 				sub_span.className = 'cm_sub_span';
 
 				if(typeof item.sub !== "undefined"){
-					sub_span.innerHTML = '&#155;';
+					if(ContextUtil.getProperty(options, "sub_icon", "") != ""){
+						sub_span.innerHTML = ContextUtil.getProperty(options, "sub_icon", "");
+					}else{
+						sub_span.innerHTML = '&#155;';
+					}
 				}
 
 				li.appendChild(icon_span);
@@ -97,7 +139,7 @@ function ContextMenu(menu){
 
 		var menu = document.getElementById('cm_' + num);
 
-		var clickCoords = ContextUtil.getPosition(e);
+		var clickCoords = {x: e.clientX, y: e.clientY};
 		var clickCoordsX = clickCoords.x;
 		var clickCoordsY = clickCoords.y;
 
@@ -107,16 +149,18 @@ function ContextMenu(menu){
 		var windowWidth = window.innerWidth;
 		var windowHeight = window.innerHeight;
 
+		var mouseOffset = parseInt(ContextUtil.getProperty(options, "mouse_offset", 2));
+
 		if((windowWidth - clickCoordsX) < menuWidth){
 			menu.style.left = windowWidth - menuWidth + "px";
 		}else{
-			menu.style.left = (clickCoordsX + 2) + "px";
+			menu.style.left = (clickCoordsX + mouseOffset) + "px";
 		}
 
 		if((windowHeight - clickCoordsY) < menuHeight){
 			menu.style.top = windowHeight - menuHeight + "px";
 		}else{
-			menu.style.top = (clickCoordsY + 2) + "px";
+			menu.style.top = (clickCoordsY + mouseOffset) + "px";
 		}
 
 		var sizes = ContextUtil.getSizes(menu);
@@ -135,14 +179,20 @@ function ContextMenu(menu){
 
 		menu.classList.add("display");
 
-		window.addEventListener("click", documentClick);
+		if(ContextUtil.getProperty(options, "close_on_click", true)){
+			window.addEventListener("click", documentClick);
+		}
 
 		e.preventDefault();
 	}
 
-	function documentClick(){
+	this.hide = function(){
 		document.getElementById('cm_' + num).classList.remove("display");
 		window.removeEventListener("click", documentClick);
+	}
+
+	function documentClick(){
+		self.hide();
 	}
 
 	this.reload();
@@ -202,47 +252,5 @@ const ContextUtil = {
 			"width": width,
 			"height": height
 		};
-	},
-
-	getPosition: function(e){
-		var posx = 0;
-		var posy = 0;
-
-		if (!e) var e = window.event;
-
-		if(e.pageX || e.pageY){
-			posx = e.pageX;
-			posy = e.pageY;
-		}else if (e.clientX || e.clientY){
-			posx = e.clientX + document.body.scrollLeft + document.documentElement.scrollLeft;
-			posy = e.clientY + document.body.scrollTop + document.documentElement.scrollTop;
-		}
-
-		return {
-			x: posx,
-			y: posy
-		}
 	}
 };
-
-/*
-
-var menu = [
-	{
-		"text": "Open",
-		"icon": '<img src="images/open.png" />',
-		"enabled": true,
-		"events": {
-			"click": function(e){
-				console.log("clicked");
-			}
-		},
-		"sub": [
-			{
-				"text": "New",
-				"icon": '<img src="
-		]
-	}
-];
-
-*/
