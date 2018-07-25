@@ -24,8 +24,9 @@
   list-style-type: none;
   padding: 0;
   margin: 0;
-  background-color: #ccc;
-  box-shadow: 0 0 5px #333;
+  background-color: #dbdbdb;
+  box-shadow: 0 0 5px #626262;
+  border-radius: 1px;
 }
 
 .cm_container li{
@@ -36,7 +37,7 @@
 }
 
 .cm_container li:hover{
-  background-color: #bbb;
+  background-color: #b0b0b0;
 }
 
 .cm_container li .cm_icon_span{
@@ -44,7 +45,6 @@
   height: 1.2em;
   vertical-align: bottom;
   display: inline-block;
-  border-right: 1px solid #aaa;
   margin-right: 5px;
   padding-right: 5px;
   text-align: center;
