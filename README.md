@@ -8,7 +8,7 @@ ContextmenuJS is a simple JavaScript library, to display custom contextmenus (ri
 - [Installation](#installation)
 - [Usage](#usage)
 - [Documentation](#documentation)
-  - [Contextmenu](#contextmenu)
+  - [ContextMenu](#contextmenu)
   - [Menu structure](#menu-structure)
   - [ContextUtil](#contextutil)
   - [Options](#options)
@@ -51,7 +51,7 @@ var menuitems = [
 
 ### Create new contextmenu
 ```javascript
-var menu = new Contextmenu(menuitems);
+var menu = new ContextMenu(menuitems);
 ```
 
 ### Append contextmenu to listener
@@ -70,7 +70,7 @@ menu.reload(); // Always use this, when you change the menu
 It's the main object to display the contextmenu
 #### Instanciating
 ```javascript
-new Contextmenu(menu_structure, options);
+new ContextMenu(menu_structure, options);
 ```
 - **menu_structure** (Array): This array contains all items of the menu (see [below](#menu-structure))
 - **options** (object): A object with options for the contextmenu (see [below](#options)) **(optional)**
@@ -95,8 +95,8 @@ menu.getOptions();                // Returns the options
 menu.menu                         // The menu structure; change this, or the parameter, to change the menu (no setter)
 menu.contextTarget                // The target, where the contextmenu was last opened
 
-Contextmenu.count                 // Number of contextmenus created (for the id's)
-Contextmenu.DIVIDER               // Constant, that is used to mark a item as a divider ("type": Contextmenu.DIVIDER)
+ContextMenu.count                 // Number of contextmenus created (for the id's)
+ContextMenu.DIVIDER               // Constant, that is used to mark a item as a divider ("type": ContextMenu.DIVIDER)
 ```
 
 ### Menu structure
@@ -115,7 +115,7 @@ var menustructure = [
     ]
   },
   {
-    "type": Contextmenu.DIVIDER              // This item is a divider (shows only gray line, no text etc.)
+    "type": ContextMenu.DIVIDER              // This item is a divider (shows only gray line, no text etc.)
   },
   {
     "text": "Item2",
