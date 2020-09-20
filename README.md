@@ -2,7 +2,7 @@
 
 ContextmenuJS is a simple JavaScript library, to display custom contextmenus (right-click).
 
-**Demo:** https://m.thalmann.bz.it/prod/contextmenujs/demo.html
+**Demo:** https://prod.thalmann.it/contextmenujs/demo.html
 
 ## Navigation
 - [Installation](#installation)
