@@ -199,4 +199,4 @@ var menu = new ContextMenu(
 
 ### Output:
 
-![contextmenuJs example](docs/example.gif)
+![contextmenuJs example](demo/example.gif)
