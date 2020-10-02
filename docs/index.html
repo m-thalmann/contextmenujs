@@ -5,7 +5,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1.0">
 	<title>ContextmenuJS - Demo Page</title>
 
-	<link rel="stylesheet" href="../contextmenu.css" />
+	<link rel="stylesheet" href="../contextmenu.css" id="theme_style" />
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.1.0/css/all.css" integrity="sha384-lKuwvrZot6UHsBSfcMvOkWwlCMgc0TaWr+30HWe3a4ltaBwTZhyTEggF5tJv8tbt" crossorigin="anonymous">
 	<script src="../contextmenu.js"></script>
 
@@ -54,6 +54,18 @@
 				menu.display(e);
 			});
 		});
+
+		const themes = {
+			default: '../contextmenu.css',
+			light: '../themes/contextmenu_light.css',
+			dark: '../themes/contextmenu_dark.css',
+		};
+
+		function changeTheme(e){
+			if(Object.keys(themes).indexOf(e.value) === -1) return;
+
+			document.getElementById('theme_style').href = themes[e.value];
+		}
 	</script>
 
 	<style>
@@ -111,6 +123,15 @@
 	</header>
 
 	<main>
+		<p style="margin-top: 0">
+			<span>Theme: </span>
+			<select onchange="changeTheme(this)">
+				<option value="default">Default</option>
+				<option value="light">Light</option>
+				<option value="dark">Dark</option>
+			</select>
+		</p>
+		
 		<div id="cmenu">
 			Right-click this blue box
 		</div>

@@ -86,7 +86,8 @@
 }
 
 .cm_container.cm_border_right > ul ul{
-  left: -100%;
+  left: unset;
+  right: 100%;
 }
 
 .cm_container.cm_border_bottom > ul ul{
